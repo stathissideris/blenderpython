@@ -59,6 +59,8 @@ class FalloffPoll(Operator):
         return True
 
     def execute(self, context):
+        if bpy.context.scene.tool_settings.proportional_edit == 'DISABLED':
+            bpy.context.scene.tool_settings.proportional_edit = 'ENABLED'
         bpy.context.scene.tool_settings.proportional_edit_falloff = self.falloff
         return {'FINISHED'}
 
@@ -77,6 +79,7 @@ class FalloffPie(Menu):
         pie.operator("pie.falloff", text="Inverse Square", icon="ROOTCURVE").falloff = 'INVERSE_SQUARE'
         pie.operator("pie.falloff", text="Sharp", icon="SHARPCURVE").falloff = 'SHARP'
         pie.operator("pie.falloff", text="Random", icon="RNDCURVE").falloff = 'RANDOM'
+        pie.operator("pie.proportional", text="Disable", icon="PROP_OFF").mode = 'DISABLED'
 
 addon_keymaps = [] # Store keymaps to use in unregister()
 
